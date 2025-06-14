@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MoonScripts - Página Inicial</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    /* Tela de carregamento */
+    #preloader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: #0d001a;
+      z-index: 9999;
+      animation: fadeOut 0.5s ease-out 0.3s forwards;
+    }
+
+    @keyframes fadeOut {
+      to {
+        opacity: 0;
+        visibility: hidden;
+      }
+    }
+
+    body {
+      background-color: #0d001a;
+      color: #f0f0f0;
+      animation: fadeIn 1.5s ease-in;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* 🔥 Faíscas */
+    .spark {
+      position: fixed;
+      top: -10px;
+      width: 2px;
+      height: 10px;
+      background: #bb00ff;
+      opacity: 0.6;
+      box-shadow: 0 0 6px #bb00ff;
+      z-index: 1;
+      animation: fall linear infinite;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(110vh);
+        opacity: 0;
+      }
+    }
+
+    header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 30px 20px;
+      background-color: #1a002a;
+      border-bottom: 1px solid #bb00ff66;
+      z-index: 10;
+      position: relative;
+    }
+
+    header h1 {
+      color: #bb00ff;
+      font-size: 32px;
+      text-shadow: 0 0 10px #bb00ff;
+      text-align: center;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 80px 20px;
+      background: linear-gradient(180deg, #1a001f, #000);
+      position: relative;
+      z-index: 10;
+    }
+
+    .hero h2 {
+      font-size: 42px;
+      color: #bb00ff;
+      text-shadow: 0 0 10px #bb00ff;
+      margin-bottom: 15px;
+    }
+
+    .hero p {
+      font-size: 18px;
+      color: #ddd;
+      margin-bottom: 30px;
+    }
+
+    .hero a.button {
+      display: inline-block;
+      background: #bb00ff;
+      color: white;
+      text-decoration: none;
+      padding: 15px 30px;
+      font-size: 16px;
+      border-radius: 8px;
+      box-shadow: 0 0 15px #bb00ff;
+      transition: 0.3s;
+    }
+
+    .hero a.button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 25px #bb00ff;
+    }
+
+    .features {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 30px;
+      padding: 60px 20px;
+      background-color: #14001f;
+      z-index: 10;
+      position: relative;
+    }
+
+    .card {
+      background: #1a001a;
+      border: 1px solid #bb00ff33;
+      padding: 30px;
+      width: 300px;
+      text-align: center;
+      border-radius: 12px;
+      box-shadow: 0 0 10px #bb00ff44;
+      transition: 0.3s;
+    }
+
+    .card h3 {
+      color: #bb00ff;
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      color: #ddd;
+      font-size: 15px;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 25px #bb00ff;
+    }
+
+    .stats {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      padding: 40px 20px;
+      background-color: rgba(20, 0, 31, 0.8);
+    }
+
+    .stats div {
+      text-align: center;
+    }
+
+    .stats h3 {
+      font-size: 32px;
+      color: #bb00ff;
+    }
+
+    .stats p {
+      font-size: 16px;
+      color: #f0f0f0;
+    }
+
+    .about, .contact {
+      padding: 50px 20px;
+      text-align: center;
+      background-color: #1a002a;
+      z-index: 10;
+      position: relative;
+    }
+
+    .about h2, .contact h2 {
+      color: #bb00ff;
+      margin-bottom: 15px;
+    }
+
+    .about p, .contact p {
+      color: #ccc;
+      font-size: 16px;
+      max-width: 600px;
+      margin: 0 auto 20px;
+    }
+
+    .contact a {
+      background: #bb00ff;
+      padding: 12px 24px;
+      color: white;
+      border-radius: 6px;
+      text-decoration: none;
+      box-shadow: 0 0 10px #bb00ff;
+    }
+
+    .contact a:hover {
+      box-shadow: 0 0 20px #bb00ff;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background-color: #0d001a;
+      color: #888;
+      border-top: 1px solid #bb00ff44;
+      position: relative;
+      z-index: 10;
+    }
+
+    footer a {
+      color: #bb00ff;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-shadow: 0 0 5px #bb00ff;
+    }
+
+    footer .discord {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    footer .discord img {
+      width: 18px;
+      height: 18px;
+      filter: drop-shadow(0 0 3px #bb00ff);
+    }
+
+    @media (max-width: 600px) {
+      .card {
+        width: 90%;
+      }
+
+      .stats {
+        flex-direction: column;
+        gap: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Tela de carregamento -->
+  <div id="preloader"></div>
+
+  <!-- Contêiner para as faíscas -->
+  <div id="sparks-container"></div>
+
+  <header>
+    <h1>🌙 MoonScripts</h1>
+  </header>
+
+  <section class="hero">
+    <h2>Automatize sua rotina escolar com estilo.</h2>
+    <p>Scripts inteligentes para atividades, provas e muito mais.</p>
+    <a class="button" href="http://moonscript.cloud/" target="_blank">COMEÇAR AGORA</a>
+  </section>
+
+  <section class="features">
+    <div class="card">
+      <h3>✅ Atividades</h3>
+      <p>Responda atividades automaticamente com segurança e velocidade.</p>
+    </div>
+    <div class="card">
+      <h3>📄 Prova Paulista</h3>
+      <p>Envie provas rapidamente com apenas um clique.</p>
+    </div>
+  </section>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Contador com Animação</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #111;
+      color: white;
+      font-family: sans-serif;
+    }
+
+    .stats {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 4rem 2rem;
+      text-align: center;
+    }
+
+    .stats div h3 {
+      font-size: 2.5rem;
+      margin: 0;
+    }
+
+    .stats div p {
+      margin-top: 0.5rem;
+      font-size: 1.1rem;
+      color: #ccc;
+    }
+  </style>
+</head>
+<body>
+  <section class="stats">
+    <div>
+      <h3 class="count" data-target="10400">+0</h3>
+      <p>Atividades resolvidas</p>
+    </div>
+    <div>
+      <h3 class="count" data-target="4300">+0</h3>
+      <p>Provas enviadas</p>
+    </div>
+    <div>
+      <h3 class="count" data-target="5200">+0</h3>
+      <p>Usuários ativos</p>
+    </div>
+  </section>
+
+  <script>
+    function animateCounter(element, target, duration) {
+      let start = 0;
+      let startTime = null;
+
+      function easeOutQuad(t) {
+        return t * (2 - t); // aceleração rápida no início, lenta no fim
+      }
+
+      function step(timestamp) {
+        if (!startTime) startTime = timestamp;
+        const progress = Math.min((timestamp - startTime) / duration, 1);
+        const eased = easeOutQuad(progress);
+        const current = Math.floor(eased * target);
+
+        element.textContent = '+' + current.toLocaleString();
+
+        if (progress < 1) {
+          requestAnimationFrame(step);
+        } else {
+          element.textContent = '+' + target.toLocaleString();
+        }
+      }
+
+      requestAnimationFrame(step);
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const counters = document.querySelectorAll('.count');
+      counters.forEach(counter => {
+        const target = parseInt(counter.getAttribute('data-target'), 10);
+        animateCounter(counter, target, 5000); // duração: 5 segundos
+      });
+    });
+  </script>
+</body>
+</html>
+  </section>
+
+  <section class="about">
+    <h2>Sobre o MoonScripts</h2>
+    <p>MoonScripts é uma plataforma feita para estudantes que buscam praticidade e agilidade no envio de atividades escolares, incluindo tarefas e provas digitais.</p>
+  </section>
+
+  <footer>
+    © 2025 <strong>MoonScripts</strong> | 
+    <span class="discord">
+      <img src="https://i.imgur.com/BXlz7ja.jpeg" alt="Discord">
+      <a href="https://discord.gg/reTunTbA" target="_blank">MoonScripts</a>
+    </span>
+  </footer>
+
+  <script>
+    // Preloader
+    window.addEventListener("load", () => {
+      const preloader = document.getElementById("preloader");
+      setTimeout(() => {
+        preloader.style.display = "none";
+      }, 500);
+    });
+
+    // Faíscas
+    const container = document.getElementById("sparks-container");
+    function createSpark() {
+      const spark = document.createElement("div");
+      spark.classList.add("spark");
+      spark.style.left = `${Math.random() * 100}vw`;
+      spark.style.animationDuration = `${2 + Math.random() * 2}s`;
+      spark.style.opacity = Math.random();
+      container.appendChild(spark);
+      setTimeout(() => spark.remove(), 4000);
+    }
+
+    setInterval(createSpark, 120);
+  </script>
+
+</body>
+</html>
