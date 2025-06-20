@@ -44,6 +44,7 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
+    /* 🔥 Faíscas */
     .spark {
       position: fixed;
       top: -10px;
@@ -102,57 +103,21 @@
       margin-bottom: 30px;
     }
 
-    .glow-button {
-      --glow-color: rgb(217, 176, 255);
-      --glow-spread-color: rgba(191, 123, 255, 0.781);
-      --enhanced-glow-color: rgb(231, 206, 255);
-      --btn-color: rgb(100, 61, 136);
-      border: .25em solid var(--glow-color);
-      padding: 1em 3em;
-      color: var(--glow-color);
-      font-size: 15px;
-      font-weight: bold;
-      background-color: var(--btn-color);
-      border-radius: 1em;
-      outline: none;
-      box-shadow: 0 0 1em .25em var(--glow-color),
-                  0 0 4em 1em var(--glow-spread-color),
-                  inset 0 0 .75em .25em var(--glow-color);
-      text-shadow: 0 0 .5em var(--glow-color);
-      position: relative;
-      transition: all 0.3s;
-      text-decoration: none;
+    .hero a.button {
       display: inline-block;
-      margin: 10px;
-      cursor: pointer;
+      background: #bb00ff;
+      color: white;
+      text-decoration: none;
+      padding: 15px 30px;
+      font-size: 16px;
+      border-radius: 8px;
+      box-shadow: 0 0 15px #bb00ff;
+      transition: 0.3s;
     }
 
-    .glow-button::after {
-      pointer-events: none;
-      content: "";
-      position: absolute;
-      top: 120%;
-      left: 0;
-      height: 100%;
-      width: 100%;
-      background-color: var(--glow-spread-color);
-      filter: blur(2em);
-      opacity: .7;
-      transform: perspective(1.5em) rotateX(35deg) scale(1, .6);
-    }
-
-    .glow-button:hover {
-      color: var(--btn-color);
-      background-color: var(--glow-color);
-      box-shadow: 0 0 1em .25em var(--glow-color),
-                  0 0 4em 2em var(--glow-spread-color),
-                  inset 0 0 .75em .25em var(--glow-color);
-    }
-
-    .glow-button:active {
-      box-shadow: 0 0 0.6em .25em var(--glow-color),
-                  0 0 2.5em 2em var(--glow-spread-color),
-                  inset 0 0 .5em .25em var(--glow-color);
+    .hero a.button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 25px #bb00ff;
     }
 
     .features {
@@ -295,7 +260,7 @@
   <!-- Tela de carregamento -->
   <div id="preloader"></div>
 
-  <!-- Contêiner para faíscas -->
+  <!-- Contêiner para as faíscas -->
   <div id="sparks-container"></div>
 
   <header>
@@ -305,8 +270,9 @@
   <section class="hero">
     <h2>Automatize sua rotina escolar com estilo.</h2>
     <p>Scripts inteligentes para atividades, provas e muito mais.</p>
-    <a class="glow-button" href="https://gabaritus.moonscripts.cloud/" target="_blank">GABARITUS</a>
-    <a class="glow-button" href="https://redacao.moonscripts.cloud/" target="_blank">REDAÇÃO</a>
+    <a class="button" href="https://gabaritus.moonscripts.cloud/" target="_blank">GABARITUS</a>
+    <a class="button" href="https://redacao.moonscripts.cloud/" target="_blank">REDAÇÃO</a>
+  
   </section>
 
   <section class="features">
@@ -319,7 +285,41 @@
       <p>Envie provas rapidamente com apenas um clique.</p>
     </div>
   </section>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Contador com Animação</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #111;
+      color: white;
+      font-family: sans-serif;
+    }
 
+    .stats {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 4rem 2rem;
+      text-align: center;
+    }
+
+    .stats div h3 {
+      font-size: 2.5rem;
+      margin: 0;
+    }
+
+    .stats div p {
+      margin-top: 0.5rem;
+      font-size: 1.1rem;
+      color: #ccc;
+    }
+  </style>
+</head>
+<body>
   <section class="stats">
     <div>
       <h3 class="count" data-target="10400">+0</h3>
@@ -335,6 +335,45 @@
     </div>
   </section>
 
+  <script>
+    function animateCounter(element, target, duration) {
+      let start = 0;
+      let startTime = null;
+
+      function easeOutQuad(t) {
+        return t * (2 - t); // aceleração rápida no início, lenta no fim
+      }
+
+      function step(timestamp) {
+        if (!startTime) startTime = timestamp;
+        const progress = Math.min((timestamp - startTime) / duration, 1);
+        const eased = easeOutQuad(progress);
+        const current = Math.floor(eased * target);
+
+        element.textContent = '+' + current.toLocaleString();
+
+        if (progress < 1) {
+          requestAnimationFrame(step);
+        } else {
+          element.textContent = '+' + target.toLocaleString();
+        }
+      }
+
+      requestAnimationFrame(step);
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const counters = document.querySelectorAll('.count');
+      counters.forEach(counter => {
+        const target = parseInt(counter.getAttribute('data-target'), 10);
+        animateCounter(counter, target, 7000); // duração: 7 segundos
+      });
+    });
+  </script>
+</body>
+</html>
+  </section>
+
   <section class="about">
     <h2>Sobre o MoonScripts</h2>
     <p>MoonScripts é uma plataforma feita para estudantes que buscam praticidade e agilidade no envio de atividades escolares, incluindo tarefas e provas digitais.</p>
@@ -346,6 +385,7 @@
       <img src="https://i.imgur.com/BXlz7ja.jpeg" alt="Discord">
       <a href="https://discord.gg/off" target="_blank">MoonScripts</a>
     </span>
+    
   </footer>
 
   <script>
@@ -368,34 +408,9 @@
       container.appendChild(spark);
       setTimeout(() => spark.remove(), 4000);
     }
+
     setInterval(createSpark, 120);
-
-    // Contadores
-    function animateCounter(element, target, duration) {
-      let start = 0;
-      let startTime = null;
-      function easeOutQuad(t) { return t * (2 - t); }
-      function step(timestamp) {
-        if (!startTime) startTime = timestamp;
-        const progress = Math.min((timestamp - startTime) / duration, 1);
-        const eased = easeOutQuad(progress);
-        const current = Math.floor(eased * target);
-        element.textContent = '+' + current.toLocaleString();
-        if (progress < 1) requestAnimationFrame(step);
-        else element.textContent = '+' + target.toLocaleString();
-      }
-      requestAnimationFrame(step);
-    }
-
-    window.addEventListener('DOMContentLoaded', () => {
-      const counters = document.querySelectorAll('.count');
-      counters.forEach(counter => {
-        const target = parseInt(counter.getAttribute('data-target'), 10);
-        animateCounter(counter, target, 7000);
-      });
-    });
   </script>
 
 </body>
-
 </html>
